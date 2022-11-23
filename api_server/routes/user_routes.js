@@ -10,4 +10,8 @@ module.exports = (app)=>{
         '/api/user/',
         user_controller.create
     );
+    app.post(
+        '/api/user/login',
+        user_controller.login
+    );
 }
