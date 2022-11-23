@@ -4,7 +4,7 @@ import 'package:flutter_chat/src/domain/errors/http_errors/http_request_error.da
 
 import 'package:flutter_chat/src/domain/either/either.dart';
 
-import '../../domain/abstract_repositories/abstractuser_repository.dart';
+import '../../domain/abstract_repositories/abstract_user_repository.dart';
 import '../mixins/handle_http_request_error.dart';
 import '../services/remote/user_service.dart';
 
