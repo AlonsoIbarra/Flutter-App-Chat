@@ -62,6 +62,7 @@ module.exports = {
                 const data = {
                     id: match_user.id,
                     name: match_user.name,
+                    user: match_user.user,
                     email: match_user.email,
                     phone: match_user.phone,
                     image: match_user.image,

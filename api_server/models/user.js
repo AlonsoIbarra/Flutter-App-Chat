@@ -14,6 +14,7 @@ user.create = async (usr) => {
     const sql = `INSERT INTO users(
         email,
         name,
+        user,
         phone,
         image,
         password,
@@ -26,6 +27,7 @@ user.create = async (usr) => {
         [
             usr.email,
             usr.name,
+            usr.user,
             usr.phone,
             usr.image,
             hash_password,
@@ -40,6 +42,7 @@ user.findById = (id, callback) => {
         id,
         email,
         name,
+        user,
         image,
         phone,
         password,
@@ -59,6 +62,7 @@ user.findByEmail = (email) => {
         id,
         email,
         name,
+        user,
         image,
         phone,
         password,
