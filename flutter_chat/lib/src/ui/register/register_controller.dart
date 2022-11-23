@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/domain/abstract_repositories/abstractuser_repository.dart';
+import 'package:flutter_chat/src/domain/abstract_repositories/abstract_user_repository.dart';
 import 'package:flutter_chat/src/domain/models/user/user.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
   RegisterController(this.userRepository);
@@ -23,8 +23,16 @@ class RegisterController extends GetxController {
     );
     final result = await userRepository.createUser(user);
     result.when(
-      (error) => print("Error ${error.toString()}"),
-      (success) => print("Success $success"),
+      (error) => error.whenOrNull(
+        network: () =>
+            Get.snackbar('Error', 'Fallo en la conexión de internet'),
+        notFound: () => Get.snackbar('Error', 'Url no encontrada'),
+        serverError: () => Get.snackbar('Error', 'Error en el servidor'),
+        unhandled: () =>
+            Get.snackbar('Error', 'Ha ocurrido un error desconocido.'),
+      ),
+      (success) => Get.snackbar(
+          'Registro exitoso', 'Usuario registrado, puede iniciar sesión'),
     );
   }
 }
