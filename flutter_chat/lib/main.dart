@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
@@ -6,8 +7,17 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter_chat/src/config/routes/app_routes.dart';
 import 'package:flutter_chat/src/config/routes/routes.dart';
 
+import 'src/repositories_injection.dart';
+
 void main() {
-  runApp(MyApp());
+  repositoriesInjection(
+    dio: Dio(
+      BaseOptions(
+        baseUrl: 'http://192.168.1.80:3000',
+      ),
+    ),
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
