@@ -35,4 +35,39 @@ user.create = async (usr) => {
     );
 };
 
+user.findById = (id, callback) => {
+    const sql = `SELECT
+        id,
+        email,
+        name,
+        image,
+        phone,
+        password,
+        session_token
+    FROM users
+    WHERE
+        id=$1`;
+
+    return database.oneOrNone( sql, id )
+        .then( user => {
+            callback(null, user);
+        });
+}
+
+user.findByEmail = (email) => {
+    const sql = `SELECT
+        id,
+        email,
+        name,
+        image,
+        phone,
+        password,
+        session_token
+    FROM users
+    WHERE
+        email=$1`;
+
+    return database.oneOrNone( sql, email );
+}
+
 module.exports = user;
