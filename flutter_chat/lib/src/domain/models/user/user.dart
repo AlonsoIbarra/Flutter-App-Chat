@@ -11,30 +11,33 @@ part 'user.g.dart';
 class User with _$User {
   const User._();
   factory User({
-    @JsonKey(defaultValue: 0)
-        required int id,
+    int? id,
+    required String user,
     required String email,
     required String name,
     required String phone,
-    required String image,
+    String? image,
+    String? password,
     @JsonKey(
       name: 'is_availabe',
+      defaultValue: true,
     )
-        required bool isAvailabe,
+        bool? isAvailabe,
     @JsonKey(
       name: 'session_token',
+      defaultValue: '',
     )
-        required String sessionToken,
+        String? sessionToken,
     @JsonKey(
       name: 'created_at',
     )
-    @DateTimeConverterNotNull()
-        required DateTime createdAt,
+    @DateTimeConverterNull()
+        DateTime? createdAt,
     @JsonKey(
       name: 'updated_at',
     )
-    @DateTimeConverterNotNull()
-        required DateTime updatedAt,
+    @DateTimeConverterNull()
+        DateTime? updatedAt,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
