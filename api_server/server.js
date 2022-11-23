@@ -3,6 +3,7 @@ const app = express();
 const http = require('http');
 const logger = require('morgan');
 const cors = require('cors');
+const passport = require('passport');
 const { response } = require('express');
 const server = http.createServer(
     app
@@ -23,6 +24,15 @@ app.use(
 app.use(
     cors()
 );
+app.use(
+    passport.initialize()
+);
+app.use(
+    passport.session()
+);
+
+require('./config/passport')(passport);
+
 app.disable(
     'x-powered-by'
 );
@@ -33,6 +43,7 @@ app.set(
 
 // Import routes
 const users = require('./routes/user_routes');
+const passport_function = require('./config/passport');
 users(app);
 
 server.listen(
