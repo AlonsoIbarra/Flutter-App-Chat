@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
-import 'package:flutter_chat/src/config/utils/app_image_routs.dart';
+import 'package:flutter_chat/src/config/utils/app_image_routes.dart';
 import 'package:flutter_chat/src/ui/login/login_controller.dart';
 import 'package:flutter_chat/src/ui/login/widgets/login_form.dart';
 import 'package:sizer/sizer.dart';

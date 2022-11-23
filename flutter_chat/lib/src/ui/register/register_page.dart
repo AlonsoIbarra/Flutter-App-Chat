@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/src/repositories_injection.dart';
 import 'package:flutter_chat/src/ui/register/register_controller.dart';
 import 'package:flutter_chat/src/ui/register/widgets/register_form.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../config/utils/app_colors.dart';
-import '../../config/utils/app_image_routs.dart';
+import '../../config/utils/app_image_routes.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({
     Key? key,
     RegisterController? registerController,
-  })  : registerController = registerController ?? RegisterController(),
+  })  : registerController = registerController ??
+            RegisterController(
+              RepositoriesGetter.userRepository,
+            ),
         super(key: key);
   RegisterController registerController;
 
