@@ -1,4 +1,5 @@
 const database = require("../config/config");
+const bcrypt = require("bcryptjs");
 
 const user = {};
 
@@ -8,7 +9,8 @@ user.getAll = () => {
 };
 
 
-user.create = (usr) => {
+user.create = async (usr) => {
+    const hash_password = await bcrypt.hash(usr.password, 10);
     const sql = `INSERT INTO users(
         email,
         name,
@@ -26,7 +28,7 @@ user.create = (usr) => {
             usr.name,
             usr.phone,
             usr.image,
-            usr.password,
+            hash_password,
             new Date,
             new Date
         ]
