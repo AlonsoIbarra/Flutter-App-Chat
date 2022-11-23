@@ -2,7 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../datetime_converter.dart';
+import '../utils/datetime_converter.dart';
+import '../utils/integer_converter.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';
@@ -11,7 +12,8 @@ part 'user.g.dart';
 class User with _$User {
   const User._();
   factory User({
-    int? id,
+    @StringToIntConverter()
+        int? id,
     required String user,
     required String email,
     required String name,
