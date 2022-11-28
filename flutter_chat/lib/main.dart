@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
+import 'package:flutter_chat/src/data/services/local/get_storage_service.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_chat/src/config/routes/app_routes.dart';
 import 'package:flutter_chat/src/config/routes/routes.dart';
 
-import 'src/domain/models/user/user.dart';
 import 'src/repositories_injection.dart';
 
 void main() async {
@@ -40,14 +40,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    final GetStorage getStorage = GetStorage();
-    final user = User.fromJson(getStorage.read('user') ??
-        {
-          'user': '',
-          'email': '',
-          'name': '',
-          'phone': '',
-        });
+    final user = GetStorageService.maybeGetLoggedUser();
     if (user.id != null && widget.initialRoute == null) {
       widget.initialRoute = Routes.home;
     }

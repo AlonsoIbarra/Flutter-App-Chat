@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/domain/abstract_repositories/abstract_auth_repository.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../config/routes/routes.dart';
+import '../../data/services/local/get_storage_service.dart';
 
 class LoginController extends GetxController {
   final AbstractAuthRepository _authRepository;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final GetStorage _getStorage = GetStorage();
   LoginController(this._authRepository);
   Future<void> login() async {
     final response = await _authRepository.login(
@@ -26,7 +25,7 @@ class LoginController extends GetxController {
             Get.snackbar('Error', 'Ha ocurrido un error desconocido.'),
       ),
       (user) {
-        _getStorage.write('user', user!.toJson());
+        GetStorageService.saveGetLoggedUser(user);
         Get.toNamed(Routes.home);
       },
     );
