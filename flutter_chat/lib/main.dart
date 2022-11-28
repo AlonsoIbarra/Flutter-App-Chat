@@ -3,28 +3,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
 import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_chat/src/config/routes/app_routes.dart';
 import 'package:flutter_chat/src/config/routes/routes.dart';
 
+import 'src/domain/models/user/user.dart';
 import 'src/repositories_injection.dart';
 
-void main() {
+void main() async {
   repositoriesInjection(
     dio: Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.1.80:3000',
+        baseUrl: 'http://192.168.1.140:3000',
       ),
     ),
   );
-  runApp(const MyApp());
+  await GetStorage.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final String? initialRoute;
+  String? initialRoute;
   final List<GetPage>? pages;
 
-  const MyApp({
+  MyApp({
     Key? key,
     this.initialRoute,
     this.pages,
@@ -35,6 +38,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    final GetStorage getStorage = GetStorage();
+    final user = User.fromJson(getStorage.read('user') ??
+        {
+          'user': '',
+          'email': '',
+          'name': '',
+          'phone': '',
+        });
+    if (user.id != null && widget.initialRoute == null) {
+      widget.initialRoute = Routes.home;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
