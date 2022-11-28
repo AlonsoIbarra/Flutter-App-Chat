@@ -8,4 +8,5 @@ class AppColors {
   static Color? textColor = const Color.fromRGBO(255, 255, 255, 1);
   static Color unselectedTab = const Color.fromRGBO(255, 255, 255, 0.5);
   static Color selectedTab = const Color.fromRGBO(255, 255, 255, 1);
+  static Color secondaryButtonBackgroundColor = Colors.green;
 }
