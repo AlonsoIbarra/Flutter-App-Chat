@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/src/config/routes/routes.dart';
 import 'package:flutter_chat/src/domain/abstract_repositories/abstract_user_repository.dart';
 import 'package:flutter_chat/src/domain/models/user/user.dart';
 import 'package:get/get.dart';
@@ -31,8 +32,10 @@ class RegisterController extends GetxController {
         unhandled: () =>
             Get.snackbar('Error', 'Ha ocurrido un error desconocido.'),
       ),
-      (success) => Get.snackbar(
-          'Registro exitoso', 'Usuario registrado, puede iniciar sesión'),
+      (success) => () {
+        Get.snackbar('Registro exitoso', 'Inicia sesión');
+        Get.toNamed(Routes.login);
+      },
     );
   }
 }
