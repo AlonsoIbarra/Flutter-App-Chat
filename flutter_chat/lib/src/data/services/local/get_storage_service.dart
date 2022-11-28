@@ -20,4 +20,8 @@ class GetStorageService {
     final GetStorage getStorage = GetStorage();
     getStorage.write('user', user!.toJson());
   }
+
+  static void deleteGetLoggedUser() async {
+    await GetStorage().remove('user');
+  }
 }
