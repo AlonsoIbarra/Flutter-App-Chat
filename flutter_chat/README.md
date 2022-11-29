@@ -15,6 +15,10 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+# Backend execution
+cd api_server
+node server.js
+
 # Steps to run
 You must generate the models, assets and all generated code
 ```shell
