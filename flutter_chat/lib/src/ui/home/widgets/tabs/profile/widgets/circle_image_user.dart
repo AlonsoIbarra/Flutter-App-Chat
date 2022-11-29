@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../../config/utils/app_image_routes.dart';
 
 class CircleImageUser extends StatelessWidget {
-  final String imageProfilePath;
-  const CircleImageUser({Key? key, required this.imageProfilePath})
+  final String profileUserImage;
+  const CircleImageUser({Key? key, required this.profileUserImage})
       : super(key: key);
 
   @override
@@ -12,10 +12,12 @@ class CircleImageUser extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: ClipOval(
-        child: FadeInImage.assetNetwork(
-          placeholder: AppImageRoutes.loginImage,
-          image: imageProfilePath,
-        ),
+        child: (profileUserImage.isNotEmpty)
+            ? FadeInImage.assetNetwork(
+                placeholder: AppImageRoutes.loginImage,
+                image: profileUserImage,
+              )
+            : Image.asset(AppImageRoutes.imageProfileDefault),
       ),
     );
   }
