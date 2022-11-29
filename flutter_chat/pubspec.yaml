@@ -36,6 +36,7 @@ dependencies:
   freezed_annotation: ^2.2.0
   get: ^4.6.5
   get_storage: ^2.0.3
+  image_picker: ^0.8.6
   json_annotation: ^4.7.0
   sizer: ^2.0.15
 
