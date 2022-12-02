@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
 import 'package:flutter_chat/src/ui/register/register_controller.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/utils.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../config/utils/app_image_routes.dart';
 
 class RegisterForm extends StatelessWidget {
   RegisterForm({
@@ -18,6 +23,24 @@ class RegisterForm extends StatelessWidget {
       key: registerFormKey,
       child: Column(
         children: [
+          SizedBox(
+            height: 20.h,
+            child: Obx(
+              () => GestureDetector(
+                onTap: () => registerController.loadProfileImage(),
+                child: (registerController.profileImagePath.value.isEmpty)
+                    ? Image.asset(AppImageRoutes.imageProfileDefault)
+                    : Image.file(
+                        File(
+                          registerController.profileImagePath.value,
+                        ),
+                      ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 2.h,
+          ),
           Container(
             decoration: BoxDecoration(
               color: AppColors.primaryOpacityColor,
