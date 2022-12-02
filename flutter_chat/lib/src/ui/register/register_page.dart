@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/src/data/services/local/multimedia_service.dart';
 import 'package:flutter_chat/src/repositories_injection.dart';
 import 'package:flutter_chat/src/ui/register/register_controller.dart';
 import 'package:flutter_chat/src/ui/register/widgets/register_form.dart';
@@ -6,15 +7,16 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../config/utils/app_colors.dart';
-import '../../config/utils/app_image_routes.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({
     Key? key,
     RegisterController? registerController,
+    MultimediaService? multimediaService,
   })  : registerController = registerController ??
             RegisterController(
               RepositoriesGetter.userRepository,
+              multimediaService ?? MultimediaService(),
             ),
         super(key: key);
   RegisterController registerController;
@@ -68,11 +70,6 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Image.asset(
-                AppImageRoutes.loginImage,
-                width: 40.w,
-                height: 20.h,
               ),
               RegisterForm(
                 registerController: registerController,
