@@ -1,13 +1,14 @@
-const User = require("../models/user");
+const UserModel = require("../models/user");
 const bcrypt = require("bcryptjs");
 const { token } = require("morgan");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
+const storage = require("../utils/cloud_storage");
 
 module.exports = {
     async getAll(request, response, next ){
         try {
-            const data = await User.getAll();
+            const data = await UserModel.getAll();
             return response.status(200).json({
                 success: true,
                 data: data
@@ -23,7 +24,32 @@ module.exports = {
     async create(request, response, next ){
         try {
             const user_data = request.body;
-            const data = await User.create(user_data);
+            const data = await UserModel.create(user_data);
+            return response.status(201).json({
+                success: true,
+                data: data.id
+            });
+        } catch (error) {
+            console.log(`error: ${error}`);
+            return response.status(501).json({
+                success: false,
+                message: error.message
+            });
+        }
+    },
+    async createWithImage(request, response, next ){
+        try {
+            const files = request.files;
+            const user_data = request.body;
+
+            if (files.length > 0 ){                
+                const pathImage = `image_${Date.now()}`;
+                const url = await storage(files[0], pathImage);
+                if (url != undefined && url != null){
+                    user_data.image = url;
+                }
+            }
+            const data = await UserModel.create(user_data);
             return response.status(201).json({
                 success: true,
                 data: data.id
@@ -40,7 +66,7 @@ module.exports = {
         try {
             const email = request.body.email;
             const password = request.body.password;
-            const match_user = await User.findByEmail(email);
+            const match_user = await UserModel.findByEmail(email);
             if(!match_user){
                 return response.status(400).json({
                     success: false,
