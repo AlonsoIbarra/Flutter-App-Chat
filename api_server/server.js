@@ -8,6 +8,21 @@ const { response } = require('express');
 const server = http.createServer(
     app
 );
+const multer = require('multer');
+const firebase_admin = require('firebase-admin');
+const firebase_account = require('./serviceAccountKey.json');
+/**
+ * Initialize firebase
+ */
+firebase_admin.initializeApp({
+    credential: firebase_admin.credential.cert(firebase_account)
+});
+const upload = multer(
+    {
+        storage:multer.memoryStorage()
+    }
+);
+
 
 const port = process.env.port || 3000;
 app.use(
@@ -44,11 +59,12 @@ app.set(
 // Import routes
 const users = require('./routes/user_routes');
 const passport_function = require('./config/passport');
-users(app);
+const { credential, storage } = require('firebase-admin');
+users(app, upload);
 
 server.listen(
     3000,
-    '192.168.1.80' || 'localhost',
+    '192.168.50.38' || 'localhost',
     function(){
         console.log('On listening in ' + process.pid + ' ...');
     }
