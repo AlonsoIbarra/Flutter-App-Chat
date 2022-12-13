@@ -10,9 +10,7 @@ user.getAll = () => {
 
 
 user.create = async (usr) => {
-    console.log('**1');
     const hash_password = await bcrypt.hash(usr.password, 10);
-    console.log('**2');
     const sql = `INSERT INTO users(
         email,
         name,
@@ -23,8 +21,6 @@ user.create = async (usr) => {
         updated_at
     )
     VALUES( $1, $2, $3, $4, $5, $6, $7) RETURNING id`;
-    console.log('**3');
-    console.log(usr);
     return database.oneOrNone(
         sql,
         [
@@ -44,7 +40,6 @@ user.findById = (id, callback) => {
         id,
         email,
         name,
-        user,
         image,
         phone,
         password,
@@ -64,7 +59,6 @@ user.findByEmail = (email) => {
         id,
         email,
         name,
-        user,
         image,
         phone,
         password,
