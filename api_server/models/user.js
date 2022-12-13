@@ -10,24 +10,26 @@ user.getAll = () => {
 
 
 user.create = async (usr) => {
+    console.log('**1');
     const hash_password = await bcrypt.hash(usr.password, 10);
+    console.log('**2');
     const sql = `INSERT INTO users(
         email,
         name,
-        user,
         phone,
         image,
         password,
         created_at,
-        updated_at    
+        updated_at
     )
     VALUES( $1, $2, $3, $4, $5, $6, $7) RETURNING id`;
+    console.log('**3');
+    console.log(usr);
     return database.oneOrNone(
         sql,
         [
             usr.email,
             usr.name,
-            usr.user,
             usr.phone,
             usr.image,
             hash_password,
