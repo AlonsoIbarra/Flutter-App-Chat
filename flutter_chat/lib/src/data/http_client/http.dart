@@ -18,13 +18,14 @@ class Http {
     T Function(int statusCode, dynamic data)? parser,
     bool useAuthHeaders = false,
     CancelToken? cancelToken,
+    FormData? formData,
   }) async {
     try {
       headers?.removeWhere((key, value) => value == null);
 
       final Response response = await dio.request(
         path,
-        data: data,
+        data: (formData != null) ? formData : data,
         queryParameters: queryParameters,
         options: Options(
           method: method,
