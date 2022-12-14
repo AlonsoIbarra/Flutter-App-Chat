@@ -14,7 +14,6 @@ class RegisterController extends GetxController {
   var profileImagePath = ''.obs;
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController userController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -22,14 +21,18 @@ class RegisterController extends GetxController {
 
   void register() async {
     final user = User(
-      user: userController.text,
       email: emailController.text,
       name: nameController.text,
       phone: phoneController.text,
       password: passwordController.text,
+      image: profileImagePath.value,
     );
     final result = await userRepository.createUser(user);
-    result.when(
+    result.whenIsRight((value) {
+      Get.snackbar('Registro exitoso', 'Inicia sesión');
+      Get.toNamed(Routes.login);
+    });
+    result.whenIsLeft(
       (error) => error.whenOrNull(
         network: () =>
             Get.snackbar('Error', 'Fallo en la conexión de internet'),
@@ -38,10 +41,6 @@ class RegisterController extends GetxController {
         unhandled: () =>
             Get.snackbar('Error', 'Ha ocurrido un error desconocido.'),
       ),
-      (success) => () {
-        Get.snackbar('Registro exitoso', 'Inicia sesión');
-        Get.toNamed(Routes.login);
-      },
     );
   }
 
