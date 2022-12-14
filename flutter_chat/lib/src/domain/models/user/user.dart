@@ -14,7 +14,6 @@ class User with _$User {
   factory User({
     @StringToIntConverter()
         int? id,
-    required String user,
     required String email,
     required String name,
     required String phone,

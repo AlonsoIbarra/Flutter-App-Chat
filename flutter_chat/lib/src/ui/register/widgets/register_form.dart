@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
 import 'package:flutter_chat/src/ui/register/register_controller.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../config/utils/app_image_routes.dart';
@@ -60,40 +59,6 @@ class RegisterForm extends StatelessWidget {
               ),
               decoration: InputDecoration(
                 hintText: 'Nombre',
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.all(5.w),
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: AppColors.primaryColor,
-                ),
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColorDark,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 2.h,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.primaryOpacityColor,
-              borderRadius: BorderRadius.circular(5.w),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
-            child: TextFormField(
-              validator: (value) {
-                if (GetUtils.isNullOrBlank(value) ?? false) {
-                  return 'Ingrese usuario';
-                }
-                return null;
-              },
-              controller: registerController.userController,
-              style: TextStyle(
-                color: AppColors.textColor,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Usuario',
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.all(5.w),
                 prefixIcon: Icon(
@@ -275,6 +240,10 @@ class RegisterForm extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
+                if (registerController.profileImagePath.value.isEmpty) {
+                  Get.snackbar('Ops!', 'Por favor agrege foto de perfil.');
+                  return;
+                }
                 if (registerFormKey.currentState?.validate() ?? false) {
                   registerController.register();
                 }
