@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/utils/app_colors.dart';
 import 'package:flutter_chat/src/data/services/local/get_storage_service.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
@@ -15,7 +16,7 @@ void main() async {
   repositoriesInjection(
     dio: Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.1.140:3000',
+        baseUrl: 'http://192.168.50.38:3000',
       ),
     ),
   );
@@ -59,6 +60,7 @@ class _MyAppState extends State<MyApp> {
         initialRoute: widget.initialRoute ?? Routes.login,
         getPages: widget.pages ?? appPages,
         navigatorKey: Get.key,
+        builder: EasyLoading.init(),
       );
     });
   }

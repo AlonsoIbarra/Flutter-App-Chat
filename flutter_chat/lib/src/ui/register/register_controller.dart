@@ -5,6 +5,7 @@ import 'package:flutter_chat/src/config/routes/routes.dart';
 import 'package:flutter_chat/src/data/services/local/multimedia_service.dart';
 import 'package:flutter_chat/src/domain/abstract_repositories/abstract_user_repository.dart';
 import 'package:flutter_chat/src/domain/models/user/user.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
@@ -20,6 +21,7 @@ class RegisterController extends GetxController {
   TextEditingController passwordConfirmController = TextEditingController();
 
   void register() async {
+    EasyLoading.show();
     final user = User(
       email: emailController.text,
       name: nameController.text,
@@ -28,6 +30,7 @@ class RegisterController extends GetxController {
       image: profileImagePath.value,
     );
     final result = await userRepository.createUser(user);
+    EasyLoading.dismiss();
     result.whenIsRight((value) {
       Get.snackbar('Registro exitoso', 'Inicia sesión');
       Get.toNamed(Routes.login);
