@@ -21,11 +21,15 @@ module.exports = (file, pathImage, deletePathImage) => {
     return new Promise((resolve, reject) => {
         
         if (deletePathImage) {
-            console.log('delete path', deletePathImage)
+            console.log(
+                '*******',
+                'delete path: ',
+                deletePathImage
+            );
 
             if (deletePathImage != null || deletePathImage != undefined) {
                 const parseDeletePathImage = url.parse(deletePathImage)
-                var ulrDelete = parseDeletePathImage.pathname.slice(23);
+                var ulrDelete = parseDeletePathImage.pathname.split('/').slice(-1);
                 const fileDelete = bucket.file(`${ulrDelete}`)
 
                 fileDelete.delete().then((imageDelete) => {
