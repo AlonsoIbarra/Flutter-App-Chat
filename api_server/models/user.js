@@ -35,7 +35,7 @@ user.create = async (usr) => {
     );
 };
 
-user.findById = (id, callback) => {
+user.findById = (id) => {
     const sql = `SELECT
         id,
         email,
@@ -48,10 +48,7 @@ user.findById = (id, callback) => {
     WHERE
         id=$1`;
 
-    return database.oneOrNone( sql, id )
-        .then( user => {
-            callback(null, user);
-        });
+    return database.oneOrNone( sql, id );
 }
 
 user.findByEmail = (email) => {
@@ -68,6 +65,27 @@ user.findByEmail = (email) => {
         email=$1`;
 
     return database.oneOrNone( sql, email );
+}
+
+user.save = (user) => {
+    const sql = `UPDATE users SET
+        email=$1,
+        name=$2,
+        image=$3,
+        phone=$4
+    WHERE
+        id=$5`;
+
+    return database.oneOrNone(
+        sql,
+        [
+            user.email,
+            user.name,
+            user.image,
+            user.phone,
+            user.id,
+        ]
+    );
 }
 
 module.exports = user;
