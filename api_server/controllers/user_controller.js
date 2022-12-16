@@ -64,7 +64,6 @@ module.exports = {
     },
     async update(request, response, next ){
         try {
-            const files = request.files;
             const user_data = request.body;
             const params = request.params;
             const match_user = await UserModel.findById(params.userId);
@@ -75,19 +74,50 @@ module.exports = {
                     message: 'User not found'
                 });
             }
-            if (files.length > 0 ){
-                const pathImage = `image_${Date.now()}`;
-                const oldPathImage = match_user.image;
-    
-                const url = await storage(files[0], pathImage, oldPathImage);
-    
-                if (url != undefined && url != null){
-                    match_user.image = url;
-                }    
-            }
             match_user.name = user_data.name;
             match_user.email = user_data.email;
             match_user.phone = user_data.phone;
+            UserModel.save(match_user);
+            return response.status(200).json({
+                success: true,
+                data: match_user
+            });
+
+        } catch (error) {
+            console.log(`error: ${error}`);
+            return response.status(501).json({
+                success: false,
+                message: error.message
+            });
+        }
+    },
+    async updateProfileImage(request, response, next ){
+        try {
+            const files = request.files;
+            const params = request.params;
+            const match_user = await UserModel.findById(params.userId);
+
+            if(!match_user){
+                return response.status(400).json({
+                    success: false,
+                    message: 'User not found'
+                });
+            }
+            if (files.length == 0 ){
+                return response.status(400).json({
+                    success: false,
+                    message: 'Profile image is missing'
+                });
+            }
+
+            const pathImage = `image_${Date.now()}`;
+            const oldPathImage = match_user.image;
+
+            const url = await storage(files[0], pathImage, oldPathImage);
+
+            if (url != undefined && url != null){
+                match_user.image = url;
+            }    
 
             UserModel.save(match_user);
             return response.status(200).json({

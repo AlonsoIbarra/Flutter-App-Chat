@@ -17,8 +17,12 @@ module.exports = (app, upload)=>{
     );
     app.put(
         '/api/user/:userId',
-        upload.array('image', 1),
         user_controller.update
+    );
+    app.put(
+        '/api/user/image/:userId',
+        upload.array('image', 1),
+        user_controller.updateProfileImage
     );
     app.post(
         '/api/user/login',
