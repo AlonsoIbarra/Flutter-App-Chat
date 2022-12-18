@@ -52,4 +52,45 @@ class UserService {
       data: data,
     );
   }
+
+  Future<HttpResponse<User>> updateProfileImage(
+    User user,
+    String imagePath,
+  ) async {
+    final xFile = XFile(imagePath);
+    final mimeType = mime(xFile.path);
+    String mimee = mimeType!.split('/')[0];
+    String type = mimeType.split('/')[1];
+    final payload = FormData.fromMap(
+      {
+        'image': MultipartFile.fromBytes(
+          await xFile.readAsBytes(),
+          contentType: MediaType(mimee, type),
+          filename: 'image${p.extension(xFile.name)}',
+        ),
+      },
+    );
+
+    return await _http.request(
+      '/api/user/image/${user.id}',
+      method: 'PUT',
+      useAuthHeaders: false,
+      parser: (statusCode, json) {
+        return User.fromJson(json['data']);
+      },
+      formData: payload,
+    );
+  }
+
+  Future<HttpResponse<User>> updateUser(User userUpdated) async {
+    return await _http.request(
+      '/api/user/${userUpdated.id}',
+      method: 'PUT',
+      useAuthHeaders: false,
+      parser: (statusCode, json) {
+        return User.fromJson(json['data']);
+      },
+      data: userUpdated.toJson(),
+    );
+  }
 }
