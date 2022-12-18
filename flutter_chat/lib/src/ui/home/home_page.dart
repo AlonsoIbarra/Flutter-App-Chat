@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/ui/home/widgets/app_navigation_bar.dart';
 import 'package:flutter_chat/src/ui/home/widgets/tabs/chats/chats_tab.dart';
-import 'package:flutter_chat/src/ui/home/widgets/tabs/profile/profile_tab.dart';
+import 'package:flutter_chat/src/ui/home/widgets/tabs/profile/view/profile_tab.dart';
 import 'package:flutter_chat/src/ui/home/widgets/tabs/users/users_tab.dart';
 import 'package:get/get.dart';
 
