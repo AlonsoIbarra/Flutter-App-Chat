@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../config/utils/app_image_routes.dart';
+import '../../../../../../../config/utils/app_image_routes.dart';
 
 class CircleImageUser extends StatelessWidget {
   final String profileUserImage;

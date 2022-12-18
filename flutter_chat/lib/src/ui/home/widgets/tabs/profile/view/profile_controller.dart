@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/config/routes/routes.dart';
 import 'package:flutter_chat/src/data/services/local/get_storage_service.dart';
 import 'package:flutter_chat/src/data/services/local/multimedia_service.dart';
@@ -17,10 +18,5 @@ class ProfileController extends GetxController {
       Routes.login,
       (route) => false,
     );
-  }
-
-  void updateProfileImage() async {
-    final file = await multimediaService.selectImageFromLocalGallery();
-    print("File ${file}");
   }
 }
