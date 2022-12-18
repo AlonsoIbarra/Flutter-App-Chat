@@ -30,6 +30,8 @@ Future<void> repositoriesInjection({
 class RepositoriesGetter {
   RepositoriesGetter._();
 
-  static AbstractUserRepository get userRepository => Get.find();
-  static AbstractAuthRepository get authRepository => Get.find();
+  static AbstractUserRepository get userRepository =>
+      Get.find<AbstractUserRepository>();
+  static AbstractAuthRepository get authRepository =>
+      Get.find<AbstractAuthRepository>();
 }
