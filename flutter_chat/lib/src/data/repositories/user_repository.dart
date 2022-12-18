@@ -22,4 +22,27 @@ class UserRepository
     }
     return handleHttpRequestError(result);
   }
+
+  @override
+  Future<Either<HttpRequestError, User>> updateProfileImage(
+      User user, String imagePath) async {
+    final result = await _userService.updateProfileImage(
+      user,
+      imagePath,
+    );
+    if (result.error == null) {
+      return Right(result.data!);
+    }
+    return handleHttpRequestError(result);
+  }
+
+  @override
+  Future<Either<HttpRequestError, User>> updateUser(User userUpdated) async {
+    final result = await _userService.updateUser(userUpdated);
+
+    if (result.error == null) {
+      return Right(result.data!);
+    }
+    return handleHttpRequestError(result);
+  }
 }
