@@ -74,7 +74,7 @@ class UserService {
     return await _http.request(
       '/api/user/image/${user.id}',
       method: 'PUT',
-      useAuthHeaders: false,
+      useAuthHeaders: true,
       parser: (statusCode, json) {
         return User.fromJson(json['data']);
       },
@@ -86,7 +86,7 @@ class UserService {
     return await _http.request(
       '/api/user/${userUpdated.id}',
       method: 'PUT',
-      useAuthHeaders: false,
+      useAuthHeaders: true,
       parser: (statusCode, json) {
         return User.fromJson(json['data']);
       },

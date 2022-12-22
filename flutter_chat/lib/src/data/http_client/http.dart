@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_chat/src/data/services/local/get_storage_service.dart';
 
 import 'http_response.dart';
 
@@ -23,6 +24,14 @@ class Http {
     try {
       headers?.removeWhere((key, value) => value == null);
 
+      if (useAuthHeaders) {
+        final sessionToken =
+            GetStorageService.maybeGetLoggedUser().sessionToken;
+        headers = {
+          ...?headers,
+          'authorization': sessionToken,
+        };
+      }
       final Response response = await dio.request(
         path,
         data: (formData != null) ? formData : data,
