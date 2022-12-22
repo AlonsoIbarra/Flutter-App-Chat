@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_chat/src/data/services/local/get_storage_service.dart';
 import 'package:flutter_chat/src/domain/models/user/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime_type/mime_type.dart';
@@ -91,6 +92,26 @@ class UserService {
         return User.fromJson(json['data']);
       },
       data: userUpdated.toJson(),
+    );
+  }
+
+  Future<HttpResponse<List<User>>> listAllUsers() async {
+    final User loggedUser = GetStorageService.maybeGetLoggedUser();
+    return await _http.request(
+      '/api/user/',
+      method: 'GET',
+      useAuthHeaders: true,
+      parser: (statusCode, json) {
+        if (statusCode == 200) {
+          return (json['data'] as List)
+              .map((item) => User.fromJson(item))
+              .toList();
+        }
+        return [];
+      },
+      data: {
+        'userId': loggedUser.id,
+      },
     );
   }
 }
