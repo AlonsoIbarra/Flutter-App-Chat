@@ -9,6 +9,19 @@ user.getAll = () => {
 };
 
 
+user.listAll = (userId) => {
+    if ( userId ){
+        const sql = `SELECT	email, name, phone, image FROM users WHERE id != $1`;
+        return database.manyOrNone(
+            sql,
+            userId
+        );    
+    }
+    return database.manyOrNone(
+        'SELECT	email, name, phone, image FROM users'
+    );
+};
+
 user.create = async (usr) => {
     const hash_password = await bcrypt.hash(usr.password, 10);
     const sql = `INSERT INTO users(

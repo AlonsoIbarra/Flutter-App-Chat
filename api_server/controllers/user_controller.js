@@ -8,7 +8,8 @@ const storage = require("../utils/cloud_storage");
 module.exports = {
     async getAll(request, response, next ){
         try {
-            const data = await UserModel.getAll();
+            const userId = request.query.userId;
+            const data = await UserModel.listAll(userId);
             return response.status(200).json({
                 success: true,
                 data: data
