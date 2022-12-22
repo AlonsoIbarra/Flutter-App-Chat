@@ -11,4 +11,5 @@ abstract class AbstractUserRepository {
   );
 
   Future<Either<HttpRequestError, User>> updateUser(User newUser);
+  Future<Either<HttpRequestError, List<User>>> listAllUsers();
 }

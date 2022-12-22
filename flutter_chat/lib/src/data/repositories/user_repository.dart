@@ -45,4 +45,13 @@ class UserRepository
     }
     return handleHttpRequestError(result);
   }
+
+  @override
+  Future<Either<HttpRequestError, List<User>>> listAllUsers() async {
+    final result = await _userService.listAllUsers();
+    if (result.error == null) {
+      return Right(result.data ?? []);
+    }
+    return handleHttpRequestError(result);
+  }
 }
