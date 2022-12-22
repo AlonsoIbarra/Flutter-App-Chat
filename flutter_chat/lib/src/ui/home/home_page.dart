@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
           index: homeController.tabIndex.value,
           children: [
             const ChatsTab(),
-            const UsersTab(),
+            UsersTab(),
             ProfileTab(),
           ],
         ),
